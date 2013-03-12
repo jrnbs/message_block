@@ -9,6 +9,8 @@ module MessageBlock
       options[:html][:id] = options[:id] if options[:id]
       options[:html][:class] = options[:class] if options[:class]
       options[:container] = :div if options[:container].nil?
+      options[:before_message] = nil if options[:before_message].nil?
+      options[:after_message] = nil if options[:after_message].nil?
       
       flash_messages = {}
       
@@ -40,7 +42,7 @@ module MessageBlock
       flash_messages[options[:model_error_type].to_sym] += model_errors
       
       contents = flash_messages.keys.sort_by(&:to_s).select {|type| !flash_messages[type.to_sym].empty? }.map do |type|
-        "<ul class=\"#{type}\">" + flash_messages[type.to_sym].map {|message| "<li>#{message}</li>" }.join + "</ul>"
+        "<ul class=\"#{type}\">" + flash_messages[type.to_sym].map {|message| "<li>#{options[:after_message]}#{message}</li>" }.join + "</ul>"
       end.join
       
       unless contents.blank?
