@@ -39,7 +39,7 @@ module MessageBlock
       model_errors = model_objects.inject([]) {|b, m| b += m.errors.full_messages }
       
       flash_messages[options[:model_error_type].to_sym] ||= []
-      flash_messages[options[:model_error_type].to_sym] += model_errors
+      flash_messages[options[:model_error_type].to_sym] += model_errors.uniq
       
       contents = flash_messages.keys.sort_by(&:to_s).select {|type| !flash_messages[type.to_sym].empty? }.map do |type|
         "<ul class=\"#{type}\">" + flash_messages[type.to_sym].map {|message| "<li>#{options[:after_message]}#{message}</li>" }.join + "</ul>"
