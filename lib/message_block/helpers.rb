@@ -42,7 +42,7 @@ module MessageBlock
       flash_messages[options[:model_error_type].to_sym] += model_errors.uniq
       
       contents = flash_messages.keys.sort_by(&:to_s).select {|type| !flash_messages[type.to_sym].empty? }.map do |type|
-        "<ul class=\"#{type}\">" + flash_messages[type.to_sym].map {|message| "<li>#{options[:after_message]}#{message}</li>" }.join + "</ul>"
+        "<ul class=\"#{type}\">" + flash_messages[type.to_sym].map {|message| "<li data-alert class=\"alert-box\" >#{options[:after_message]}#{message}</li>" }.join + "</ul>"
       end.join
       
       unless contents.blank?
